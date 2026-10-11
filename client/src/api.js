@@ -3,6 +3,7 @@
 let token = null;
 try { token = localStorage.getItem('poolup-token'); } catch { /* storage unavailable */ }
 const listeners = new Set();
+const apiBaseUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
 
 export const setToken = (t) => {
   token = t;
@@ -22,7 +23,7 @@ export class ApiError extends Error {
 
 export async function api(path, { method = 'GET', body, query } = {}) {
   const qs = query ? '?' + new URLSearchParams(Object.entries(query).filter(([, v]) => v !== undefined && v !== null && v !== '')) : '';
-  const res = await fetch(`/api${path}${qs}`, {
+  const res = await fetch(`${apiBaseUrl}/api${path}${qs}`, {
     method,
     headers: {
       ...(body ? { 'Content-Type': 'application/json' } : {}),

@@ -1,6 +1,8 @@
 node_modules/
 client/dist/
 .env
+.env.*
+!.env.example
 *.log
 .DS_Store
 docs/design/*.html

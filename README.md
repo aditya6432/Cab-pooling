@@ -85,6 +85,17 @@ npm run dev                   # UI on http://localhost:5173 (proxies /api to :40
 
 **Single-process demo mode:** `cd client && npm run build`, then `cd ../server && npm start` and open **http://localhost:4000**.
 
+## Deploy the frontend and API separately
+
+The Vite frontend uses `/api` on the same origin by default. If it is hosted separately from the Express API (for example, the frontend on Vercel), configure the API origin at build time:
+
+1. In Render, create a Blueprint from this repository; [`render.yaml`](./render.yaml) defines the free Node.js API service. Set its prompted `DATABASE_URL` to a hosted PostgreSQL connection string (PostgreSQL ≥ 14 with `btree_gist`).
+2. After the API service deploys, open its Shell and run `npm run db:setup` once from the service root against the new/empty database. This creates the schema and seeds demo data; do not rerun it against a database with data you need, because setup resets the schema.
+3. In the Vercel project, add `VITE_API_URL` for each deployment environment. Its value is the backend origin only, for example `https://your-api.example.com` (no trailing slash and no `/api` suffix), then redeploy so Vite bakes it into the frontend.
+4. Check `https://your-api.example.com/api/health`. It should return JSON with `"ok": true` once the API and database are ready. Replace the example origin with the Render service URL.
+
+For local Vite development, leave `VITE_API_URL` unset; `client/vite.config.js` proxies `/api` to `http://localhost:4000`. The API currently allows cross-origin requests, so no separate CORS origin configuration is required.
+
 **Log in** as the demo student **Aarav Mehta: `2023A7PS0001H` / `poolup123`** (the login page has a button that fills it in). Every seeded student uses the same password, and the account menu (top right) switches to any of them, e.g. to confirm a payment as its payee.
 
 **Tests:** `cd server && npm test` runs **63 end-to-end tests** (12 M1, 13 M2, 14 M3, 12 M4, 12 M5). Each test file rebuilds and seeds its own database `poolup_test`, so the demo database is never touched. They cover every rule in every module, the concurrency guarantees (simultaneous requests → exactly one winner), the cross-module ledger agreement and all 81 Integrity Lab scenarios.
