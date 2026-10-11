@@ -1,0 +1,28 @@
+{
+  "name": "poolup-server",
+  "version": "1.0.0",
+  "description": "PoolUp: campus cab-pooling with Splitwise-style splitting. REST API (Express 5 + raw SQL on PostgreSQL) for all five modules.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:setup": "node scripts/setup-db.js",
+    "db:schema": "node scripts/setup-db.js --no-seed",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
+    "bench": "node scripts/bench.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.0"
+  }
+}

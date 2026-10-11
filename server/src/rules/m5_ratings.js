@@ -1,0 +1,21 @@
+// Member 5 (Ratings + Analytics / Dashboard): constraint / trigger name -> rule id (BR = business rule),
+// mechanism and plain-English meaning. The database enforces; this only explains.
+export const RATINGS_RULES = {
+  rating_score_range:        { rule: 'BR1',  mechanism: 'CHECK constraint',      text: 'Score must be an integer from 1 to 5.' },
+  rating_no_self:            { rule: 'BR2',  mechanism: 'CHECK constraint',      text: 'You cannot rate yourself.' },
+  rating_rater_on_ride:      { rule: 'BR3',  mechanism: 'Composite FOREIGN KEY', text: 'The rater must be a member of this ride.' },
+  rating_ratee_on_ride:      { rule: 'BR3',  mechanism: 'Composite FOREIGN KEY', text: 'You can only rate someone who was on this ride with you.' },
+  rating_pk:                 { rule: 'BR4',  mechanism: 'PRIMARY KEY',           text: 'You have already rated this co-rider for this ride.' },
+  rating_low_needs_comment:  { rule: 'BR5',  mechanism: 'CHECK constraint',      text: 'A 1★ or 2★ rating needs a comment of at least 10 characters.' },
+  rating_tag_map_tag_fk:     { rule: 'BR6',  mechanism: 'FOREIGN KEY',           text: 'Unknown tag.' },
+  rating_tag_map_pk:         { rule: 'BR7',  mechanism: 'PRIMARY KEY',           text: 'The same tag was added twice.' },
+  rule_ride_completed:       { rule: 'BR8',  mechanism: 'Trigger',               text: 'Ratings open only after the ride is completed.' },
+  rule_both_travelled:       { rule: 'BR9',  mechanism: 'Trigger',               text: 'Both people must have actually travelled (not cancelled / no-show).' },
+  rule_rating_window:        { rule: 'BR10', mechanism: 'Trigger',               text: 'Ratings are accepted only within 7 days of ride completion.' },
+  rule_edit_window:          { rule: 'BR11', mechanism: 'Trigger',               text: 'A rating can be edited or withdrawn only within 24 hours.' },
+  rule_rating_key_immutable: { rule: 'BR12', mechanism: 'Trigger',               text: 'The ride, rater and ratee of a rating can never change.' },
+  rule_max_tags:             { rule: 'BR13', mechanism: 'Trigger (row lock)',    text: 'At most 3 tags per rating.' },
+  rule_tag_sentiment:        { rule: 'BR14', mechanism: 'Trigger',               text: 'No negative tags on 5★, no positive tags on 1★.' },
+  rule_rated_ride_locked:    { rule: 'BR15', mechanism: 'Trigger',               text: 'A ride that has ratings cannot stop being "completed".' },
+  rule_rated_member_locked:  { rule: 'BR15', mechanism: 'Trigger',               text: 'A rated rider cannot be re-labelled cancelled / no-show.' },
+};

@@ -1,0 +1,14 @@
+# Optional: a local PostgreSQL 16 matching server/.env.example
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: poolup
+    ports:
+      - "5432:5432"
+    volumes:
+      - poolup-data:/var/lib/postgresql/data
+volumes:
+  poolup-data:

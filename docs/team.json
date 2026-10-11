@@ -1,0 +1,8 @@
+{
+  "_comment": "Names and BITS IDs of the team. Edit, then rebuild the PDFs: python3 docs/design/build_pdf.py",
+  "M1_NAME": "Member 1 name", "M1_ID": "20XXXXXXXXXXH",
+  "M2_NAME": "Member 2 name", "M2_ID": "20XXXXXXXXXXH",
+  "M3_NAME": "Member 3 name", "M3_ID": "20XXXXXXXXXXH",
+  "M4_NAME": "Member 4 name", "M4_ID": "20XXXXXXXXXXH",
+  "M5_NAME": "Aditya Kumar", "M5_ID": "20XXXXXXXXXXH"
+}
